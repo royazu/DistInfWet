@@ -1,9 +1,10 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.*;
 
 public class Node extends Thread{
-        private final int id;
+        private int id;
+        private List<Node> ConnectedNodes;
+        private List<Integer> VertexWeight;
+        private List<Pair> PortUsage;
         private final List<Integer> neighborIds;
 
         public Node(int id, List<Integer> neighborIds) {
@@ -11,7 +12,7 @@ public class Node extends Thread{
             this.neighborIds = neighborIds;
         }
 
-        public int getId() {
+        public long getId() {
             return id;
         }
 
