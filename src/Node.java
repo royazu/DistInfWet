@@ -1,15 +1,22 @@
 import java.util.*;
 
 public class Node extends Thread{
-        private int id;
+        private final int id;
         private List<Node> ConnectedNodes;
-        private List<Integer> VertexWeight;
+        private List<Integer> EdgeWeight;
         private List<Pair> PortUsage;
         private final List<Integer> neighborIds;
-
+        private final int NumberOfNodes;
         public Node(int id, List<Integer> neighborIds) {
             this.id = id;
             this.neighborIds = neighborIds;
+        }
+        public Node(int id , int numberOfNodes) {
+            super();
+            this.id = id;
+            this.NumberOfNodes = numberOfNodes;
+            ConnectedNodes = new ArrayList<>();
+
         }
 
         public long getId() {
