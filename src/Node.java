@@ -3,11 +3,11 @@ import java.util.*;
 public class Node extends Thread{
         private final int id;
         private List<Node> ConnectedNodes;
-        private List<Pair<Integer,Integer>> EdgeWeight;
-        private List<Pair<Integer,List<Integer>>> PortUsageIn;//(key,value)=(neighbour_id,(send_port,listen_port))
+        private List<Pair<Integer,Float>> EdgeWeight;
+        private ArrayList<Pair<Integer,List<Integer>>> PortUsage ;//(key,value)=(neighbour_id,(send_port,listen_port))
         private List<Integer> neighborIds;
         private final int NumberOfNodes;
-        private static ArrayList<ArrayList<Integer>> adjencyList;
+        private static float [][]  adjencyList;
 
         public Node(int id , int NumberOfNodes) {
             super();
@@ -30,5 +30,22 @@ public class Node extends Thread{
         public List<Integer> getNeighborIds() {
             return neighborIds;
         }
-        // test
+        // done maybe working
+        public void print_graph(){
+            // outer loop
+            for (int i = 1; i <= NumberOfNodes; ++i) {
+                // codes
+                System.out.print(i);
+                // inner loop
+                for(int j = 1; j <=NumberOfNodes; ++j) {
+                    if (adjencyList[i][j] != -1 ){
+                        System.out.print(j);
+                        System.out.print(adjencyList[i][j]);
+                        System.out.print(PortUsage.get(j).getValue().get(0));
+                        System.out.print(PortUsage.get(j).getValue().get(1));
+                    }
+                    System.out.println("");
+                }
+            }
+        }
     }
