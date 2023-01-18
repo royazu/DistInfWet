@@ -3,10 +3,11 @@ import java.util.*;
 public class Node extends Thread{
         private final int id;
         private List<Node> ConnectedNodes;
-        private List<Integer> EdgeWeight;
-        private List<Pair> PortUsage;
+        private List<Pair<Integer,Integer>> EdgeWeight;
+        private List<Pair<Integer,List<Integer>>> PortUsageIn;//(key,value)=(neighbour_id,(send_port,listen_port))
         private List<Integer> neighborIds;
         private final int NumberOfNodes;
+        private static ArrayList<ArrayList<Integer>> adjencyList;
 
         public Node(int id , int NumberOfNodes) {
             super();
