@@ -15,6 +15,7 @@ public class ExManager {
         this.nodes = new ArrayList<>();
         // your code here
     }
+
     public Node get_node(int id){
         // your code here
         for (Pair<Integer, Node> pair : nodes) {
@@ -29,12 +30,16 @@ public class ExManager {
         return this.num_of_nodes;
     }
 
+    // its working but i dont know how it will work while the threads are running maybe locks
     public void update_edge(int id1, int id2, double weight){
-        //your code here
+        Node node1 = this.get_node(id1);
+        Node node2 = this.get_node(id2);
+        node1.setEdgeWeight(id2, weight);
+        node2.setEdgeWeight(id1, weight);
     }
 
     public void read_txt() throws FileNotFoundException{
-        // your code here
+        // dont forget to comment all printing
         System.out.println(this.path);
         Scanner scanner = new Scanner(new File(this.path));
         String line = scanner.nextLine();
@@ -52,7 +57,7 @@ public class ExManager {
             int nodeId = Integer.parseInt(words[0]);
             List<Integer> neighborIds = new ArrayList<>();
             ArrayList<Pair<Integer, List<Integer>>> PortUsage = new ArrayList<>();
-            List<Pair<Integer,Float>> EdgeWeight = new ArrayList<>();
+            List<Pair<Integer,Double>> EdgeWeight = new ArrayList<>();
 
             for(int i = 1; i < words.length; i++){
 
@@ -62,7 +67,7 @@ public class ExManager {
                 }
                 if((i) % 4 ==2) {
                     System.out.println(words[i] + "this is the wight");
-                    EdgeWeight.add(new Pair<>(Integer.parseInt(words[i-1]),Float.parseFloat(words[i])));
+                    EdgeWeight.add(new Pair<>(Integer.parseInt(words[i-1]),Double.parseDouble(words[i])));
                 }
                 if((i) % 4 ==3) {
                     System.out.println(words[i] + "this is the port1");

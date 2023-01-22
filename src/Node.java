@@ -2,14 +2,13 @@ import java.util.*;
 
 public class Node extends Thread{
         private final int id;
-//        private List<Node> ConnectedNodes;
-        private List<Pair<Integer,Float>> EdgeWeight; //(key,value)=(neighbour_id,weight)
+        private List<Pair<Integer,Double>> EdgeWeight; //(key,value)=(neighbour_id,weight)
         private ArrayList<Pair<Integer,List<Integer>>> PortUsage ;//(key,value)=(neighbour_id,(send_port,listen_port))
         private List<Integer> neighborIds;
         private final int NumberOfNodes;
-        private static float [][] adjacencyList;
+        private static double [][] adjacencyList;
 
-        public Node(int id , int NumberOfNodes, List<Integer> neighborIds, List<Pair<Integer,Float>> EdgeWeight,
+        public Node(int id , int NumberOfNodes, List<Integer> neighborIds, List<Pair<Integer,Double>> EdgeWeight,
                     ArrayList<Pair<Integer,List<Integer>>> PortUsage) {
             super();
             this.id = id;
@@ -17,8 +16,9 @@ public class Node extends Thread{
             this.neighborIds = neighborIds;
             this.EdgeWeight = EdgeWeight;
             this.PortUsage = PortUsage;
-            this.adjacencyList = new float[NumberOfNodes][NumberOfNodes];
+            this.adjacencyList = new double[NumberOfNodes][NumberOfNodes];
         }
+
         @Override
         public void run(){
             // TODO: implament link state routing algorithm
@@ -27,13 +27,14 @@ public class Node extends Thread{
         public long getId() {
             return id;
         }
+
         //temporary function to chek that print graph is working
         private void updateAdjacencyList(){
             for (int i = 0; i < NumberOfNodes; i++) {
                 for(int j = 0; j <NumberOfNodes; j++) {
                     if (i+1==id){
                         if (neighborIds.contains(j+1)){
-                            for (Pair<Integer,Float> pair : EdgeWeight){
+                            for (Pair<Integer,Double> pair : EdgeWeight){
                                 if(pair.getKey() == j+1){
                                     adjacencyList[i][j] = pair.getValue();
                                 }
@@ -49,9 +50,20 @@ public class Node extends Thread{
         }
 
         public List<Integer> getNeighborIds() {
-
             return neighborIds;
         }
+
+        // its working but i dont know how it will work while the threads are running maybe locks
+        public void setEdgeWeight( int id, double newWeight){
+            for(Pair<Integer,Double> pair : EdgeWeight){
+                if(pair.getKey() == id){
+                    pair.setValue(newWeight);
+                }
+            }
+            System.out.println("node num "+this.id+" change w of "+id+" node, new w is"+newWeight);
+            System.out.println(EdgeWeight);
+        }
+
         // done maybe working
         public void print_graph(){
             updateAdjacencyList();
@@ -60,7 +72,6 @@ public class Node extends Thread{
             for (int i = 0; i < NumberOfNodes; i++) {
                 System.out.print(i+1 + " ");
                 for(int j = 0; j < NumberOfNodes; j++) {
-//                    System.out.print(adjacencyList[i][j]+" ");
                     if(adjacencyList[i][j] != -1){
                         System.out.print(j+1+" ");
                         System.out.print(adjacencyList[i][j]+" ");
