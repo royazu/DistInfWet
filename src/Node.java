@@ -25,29 +25,24 @@ public class Node extends Thread{
         }
 
         public long getId() {
-
             return id;
         }
-
+        //temporary function to chek that print graph is working
         private void updateAdjacencyList(){
             for (int i = 0; i < NumberOfNodes; i++) {
                 for(int j = 0; j <NumberOfNodes; j++) {
-//                    adjacencyList[i][j] = 1;
-                    if (i == j){
-                        adjacencyList[i][j] = -1;
-                    }
-                    else{
-                        if (neighborIds.contains(j) && id == i+1){
-                        for (Pair<Integer, Float> pair : EdgeWeight) {
-                            if (pair.getKey() == i) {
-                                adjacencyList[i][j] = 55;
-                            }else{
-                                adjacencyList[i][j] = 6666;
+                    if (i+1==id){
+                        if (neighborIds.contains(j+1)){
+                            for (Pair<Integer,Float> pair : EdgeWeight){
+                                if(pair.getKey() == j+1){
+                                    adjacencyList[i][j] = pair.getValue();
+                                }
                             }
+                        }else{
+                            adjacencyList[i][j] = -1;
                         }
-                    } else {
+                    }else{
                         adjacencyList[i][j] = -1;
-                    }
                     }
                 }
             }
@@ -60,22 +55,24 @@ public class Node extends Thread{
         // done maybe working
         public void print_graph(){
             updateAdjacencyList();
-            System.out.println("printin G " + id);
-//            System.out.println(adjacencyList[0][0]+" 88888");
-            // outer loop
+            // dont forget to delete this line in the end
+            System.out.println("printing G " + id);
             for (int i = 0; i < NumberOfNodes; i++) {
-                // codes
                 System.out.print(i+1 + " ");
-                // inner loop
                 for(int j = 0; j < NumberOfNodes; j++) {
-                    System.out.print(adjacencyList[i][j]+" ");
-//                    if (adjacencyList[i][j] != -1 ){
-//                        System.out.print(j+1+" ");
-//                        System.out.print(adjacencyList[i][j]+" ");
-//                        System.out.print(PortUsage.get(j).getValue().get(0)+" ");
-//                        System.out.print(PortUsage.get(j).getValue().get(1)+" ");
-//                    }
-//
+//                    System.out.print(adjacencyList[i][j]+" ");
+                    if(adjacencyList[i][j] != -1){
+                        System.out.print(j+1+" ");
+                        System.out.print(adjacencyList[i][j]+" ");
+                        // print ports dont delete
+//                        for (Pair<Integer,List<Integer>> pair : PortUsage){
+//                            if(pair.getKey() == j+1){
+//                                System.out.print(pair.getValue().get(0)+" ");
+//                                System.out.print(pair.getValue().get(1)+" ");
+//                            }
+//                        }
+
+                    }
                 }
                 System.out.println("");
             }
