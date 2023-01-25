@@ -93,6 +93,19 @@ public class ExManager {
 
     public void start(){
         // your code here
+        //runs the algorithm for 1 round
+        List<Thread> threads = new ArrayList<>();
+        for (Pair<Integer,Node> pair :this.nodes){
+            threads.add(new Thread(pair.getValue()));
+        }
+        for (Thread thread :threads){
+            thread.start();
+        }
+        for (Thread thread :threads){
+            try{thread.join();}
+            catch (Exception e){
+            }
+        }
     }
 
     public void terminate(){
