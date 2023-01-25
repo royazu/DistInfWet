@@ -30,7 +30,8 @@ public class Node implements Runnable{
             test.start();
             System.out.println("test         "+"  this is   "+this.id);
             Server server = new Server(6666+id);
-            server.start();
+            Object obj = server.getMassage();
+            System.out.println(obj+"  this is getMassageTest------------------");
             try{
                 test.join();
                 server.join();
@@ -138,8 +139,18 @@ class SendingMassage extends Thread{
 
 class Server extends Thread{
     int port;
+    Object object;
     public Server(int port){
         this.port = port;
+    }
+    public Object getMassage(){
+        try {
+            this.start();
+            this.join();
+        }catch (Exception e){
+
+        }
+        return this.object;
     }
 
     @Override
@@ -157,6 +168,7 @@ class Server extends Thread{
 
             // read the list of messages from the socket
             Object obj = objectInputStream.readObject();
+            this.object = obj;
             System.out.println(obj);
             ss.close();
             socket.close();
